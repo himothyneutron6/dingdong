@@ -31,7 +31,7 @@ command for the 9 practical
 npx create-react-app reactapplication
 npm start
 
-practical 9
+practical 9(angular fetch hook)
 import { useState, useEffect } from "react";
 
 const Fetch = () => {
@@ -46,7 +46,8 @@ export default Fetch;
 
 
 
-EARN Practical No 4
+EARN Practical No 4(user form using conditional)
+//npx create_react_app reactapplication
 
 App.js
 
@@ -138,7 +139,7 @@ button{
   border: none;
 }
 
-Earn prac 5
+Earn prac 5(user form using yup library)
 
 npx create-react-app react application
 (if error)-npm i web-vitals  --save-dev
