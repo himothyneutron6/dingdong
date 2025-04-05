@@ -1,3 +1,113 @@
+(to-do list react hook)
+npx create-react-app todo-app
+cd todo-app
+npm start
+
+app.js
+
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [task, setTask] = useState('');
+  const [todos, setTodos] = useState([]);
+
+  const handleAdd = () => {
+    if (task.trim()) {
+      setTodos([...todos, { text: task, completed: false }]);
+      setTask('');
+    }
+  };
+
+  const handleToggle = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].completed = !newTodos[index].completed;
+    setTodos(newTodos);
+  };
+
+  const handleDelete = (index) => {
+    const newTodos = todos.filter((_, i) => i !== index);
+    setTodos(newTodos);
+  };
+
+  return (
+    <div className="App">
+      <h1>To-Do List</h1>
+      <div className="input-section">
+        <input
+          type="text"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          placeholder="Enter a task"
+        />
+        <button onClick={handleAdd}>Add</button>
+      </div>
+
+      <ul>
+        {todos.map((todo, index) => (
+          <li
+            key={index}
+            className={todo.completed ? 'completed' : ''}
+          >
+            <span onClick={() => handleToggle(index)}>
+              {todo.text}
+            </span>
+            <button onClick={() => handleDelete(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+
+app.css
+
+.App {
+  text-align: center;
+  max-width: 500px;
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
+}
+
+.input-section {
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 8px;
+  width: 60%;
+  font-size: 16px;
+}
+
+button {
+  padding: 8px 12px;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background: #f4f4f4;
+  padding: 10px;
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.completed span {
+  text-decoration: line-through;
+  color: gray;
+}
+
+
 practical 1(create chat application)
 mkdir chat-app
 cd chat-app
