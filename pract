@@ -1,567 +1,268 @@
-(to-do list react hook)
-npx create-react-app todo-app
-cd todo-app
-npm start
+Practical no.1: Object Orient Programs on Variables, datatypes,
 
-app.js
+Conditional statement and Loops
 
-import React, { useState } from 'react';
-import './App.css';
+Q.1 Write a Java program to demonstrate variables and datatypes
 
-function App() {
-  const [task, setTask] = useState('');
-  const [todos, setTodos] = useState([]);
+public class pract1a{
 
-  const handleAdd = () => {
-    if (task.trim()) {
-      setTodos([...todos, { text: task, completed: false }]);
-      setTask('');
-    }
-  };
+public static void main(String[] args)
 
-  const handleToggle = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
-    setTodos(newTodos);
-  };
+{
 
-  const handleDelete = (index) => {
-    const newTodos = todos.filter((_, i) => i !== index);
-    setTodos(newTodos);
-  };
+int age = 25;
 
-  return (
-    <div className="App">
-      <h1>To-Do List</h1>
-      <div className="input-section">
-        <input
-          type="text"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-          placeholder="Enter a task"
-        />
-        <button onClick={handleAdd}>Add</button>
-      </div>
+double height = 5.9;
 
-      <ul>
-        {todos.map((todo, index) => (
-          <li
-            key={index}
-            className={todo.completed ? 'completed' : ''}
-          >
-            <span onClick={() => handleToggle(index)}>
-              {todo.text}
-            </span>
-            <button onClick={() => handleDelete(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+char gender = 'M';
+
+boolean isStudent = true;
+
+System.out.println("Age: "+age);
+
+System.out.println("Height: "+height);
+
+System.out.println("Gender: "+gender);
+
+System.out.println("Is Student:"+isStudent);
+
 }
 
-export default App;
-
-app.css
-
-.App {
-  text-align: center;
-  max-width: 500px;
-  margin: 40px auto;
-  font-family: Arial, sans-serif;
 }
 
-.input-section {
-  margin-bottom: 20px;
+Q.2 Write a Java program to demonstrate conditional statement
+
+import java.util.Scanner;
+
+public class pract1b{
+
+public static void main(String[] args)
+
+{
+
+Scanner scanner = new Scanner(System.in);
+
+System.out.println("Enter Your age: ");
+
+int age = scanner.nextInt();
+if(age>=18)
+
+{
+
+System.out.println("Your are eligible to vote");
+
 }
 
-input {
-  padding: 8px;
-  width: 60%;
-  font-size: 16px;
+else
+
+{
+
+System.out.println("You are not eligible to vote");
+
 }
 
-button {
-  padding: 8px 12px;
-  margin-left: 10px;
-  font-size: 16px;
-  cursor: pointer;
+scanner.close();
+
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
 }
 
-li {
-  background: #f4f4f4;
-  padding: 10px;
-  margin: 8px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+//Q.3 Write a Java program to demonstrate looping statement
+
+public class pract1c{
+
+public static void main(String[] args)
+
+{
+
+System.out.println("Printing numbers from 1 to 5 using for loop");
+
+for(int i = 1; i<=5; i++)
+
+{
+
+System.out.println(i+ " ");
+
 }
 
-.completed span {
-  text-decoration: line-through;
-  color: gray;
+System.out.println();
+
+System.out.println("Printing numbers from 1 to 5 using while loop");
+
+int count = 1;
+while(count<=5)
+
+{
+
+System.out.println(count+ " ");
+
+count++;
+
 }
 
+System.out.println();
 
-practical 1(create chat application)
-mkdir chat-app
-cd chat-app
-npm init -y
-npm install express socket.io
+System.out.println("Printing numbers from 1 to 5 using do-while loop");
 
-index.js
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
+int num = 1;
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+do{
 
-app.use(express.static('public'));
+System.out.println(num+ " ");
 
-io.on('connection', (socket) => {
-    console.log('A user connected');
+num++;
 
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
-    });
+}while(num<=5);
 
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
-});
-
-const PORT = 3000;
-server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-});
-
-index.html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Chat App</title>
-  <style>
-    body { font-family: Arial; }
-    ul { list-style-type: none; padding: 0; }
-    li { padding: 8px; background: #eee; margin-bottom: 5px; }
-    #form { display: flex; }
-    #input { flex: 1; padding: 10px; }
-  </style>
-</head>
-<body>
-  <h1>Chat Room</h1>
-  <ul id="messages"></ul>
-  <form id="form" action="">
-    <input id="input" autocomplete="off" /><button>Send</button>
-  </form>
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-    const form = document.getElementById('form');
-    const input = document.getElementById('input');
-    const messages = document.getElementById('messages');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      if (input.value) {
-        socket.emit('chat message', input.value);
-        input.value = '';
-      }
-    });
-
-    socket.on('chat message', function(msg) {
-      const item = document.createElement('li');
-      item.textContent = msg;
-      messages.appendChild(item);
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-  </script>
-</body>
-</html>
-
-node index.js
-
-
-
-
-How to create the react app
-npx create-react-app reactapp
-npm start 
-npm i swr
-
-Practical 8 (a)
-import useSWR from "swr";
-
-const App = () => {
-  const { data } = useSWR("https://restcountries.com/v2/all", (url) => fetch(url).then((res) => res.json()));
-
-  return data ? data.map((c) => <img key={c.alpha3Code} src={c.flags.png} alt={c.name} width={100} />) : <div>Loading...</div>;
-};
-
-export default App;
-
-
-
-import useSWR from "swr";
-
-const App = () => {
-  const { data, error } = useSWR("https://restcountries.com/v2/alpha/in", (url) => fetch(url).then((res) => res.json()));
-
-  return error ? <div>Error loading data</div> : data ? <img src={data.flags.svg} alt="India Flag" width={100} /> : <div>Loading...</div>;
-};
-
-export default App;
-
-
-command for the 9 practical
-npx create-react-app reactapplication
-npm start
-
-practical 9(angular fetch hook)
-import { useState, useEffect } from "react";
-
-const Fetch = () => {
-  const [photos, setPhotos] = useState([]);
-
-  useEffect(() => void fetch("https://jsonplaceholder.typicode.com/photos").then(res => res.json()).then(setPhotos), []);
-
-  return photos.map(({ id, url, title }) => <img key={id} src={url} alt={title} width={100} />);
-};
-
-export default Fetch;
-
-
-
-EARN Practical No 4(user form using conditional)
-//npx create_react_app reactapplication
-
-App.js
-
-import { useState } from 'react';
-import './App.css';
-
-function App() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [age, setAge] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  function validationform(e) {
-    e.preventDefault(); // Prevent form submission from reloading the page
-
-    if (firstName.length === 0) {
-      alert("Invalid form, First Name cannot be empty");
-      return;
-    }
-    if (email.length === 0) {
-      alert("Email is invalid");
-      return;
-    }
-    if (password.length < 8) {
-      alert("Password is invalid, please enter at least 8 characters");
-      return;
-    }
-    alert("Form is valid");
-  }
-
-  return (
-    <div className='main'>
-      <form onSubmit={validationform}>
-        <input
-          placeholder='Enter the First Name'
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        <input
-          placeholder='Enter the Last Name'
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        <input
-          placeholder='Enter the Mobile Number'
-          value={mobile}
-          onChange={(e) => setMobile(e.target.value)}
-        />
-        <input
-          placeholder='Enter the Age'
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-        />
-        <input
-          placeholder='Enter the Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder='Enter the Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  );
 }
 
-export default App;
-
-index.css
-
-.main{
-  padding: 5%;
-  text-align: center;
-}
-input{
-  padding: 1%;
-  width: 50%;
-  margin: 1% 2%;
-}
-button{
-  font-weight: bold;
-  background-color: red;
-  border: none;
 }
 
-Earn prac 5(user form using yup library)
+Practical no.2: Programs on Inheritance
 
-npx create-react-app react application
-(if error)-npm i web-vitals  --save-dev
+Q.1 Write a Program to demonstrate Single Inheritance.
 
-import logo from './logo.svg'
-import './App.css'
-import { useState } from 'react'
-import * as yup from 'yup' // importing functions from yup library
+// Parent class
 
-function App() {
-  const [firstName, setFirstName] = useState('') // useState to store First Name
-  const [lastName, setLastName] = useState('') // useState to store Last Name
-  const [mobile, setMobile] = useState('') // useState to store Mobile Number
-  const [age, setAge] = useState('') // useState to store Age
-  const [email, setEmail] = useState('') // useState to store Email address of the user
-  const [password, setPassword] = useState('') // useState to store Password
+class Animal {
 
-  // defining yup schema to validate our form
+ void eat() {
 
-  const userSchema = yup.object().shape({
-    // name can not be an empty string so we will use the required function
-    firstName: yup.string().required(),
-    lastName: yup.string(),
-    // email can not be an empty string so we will use the required function
-    email: yup.string().email().required(),
-    // password can not be an empty string so we will use the required function. Also, we have used the `min` function to set the minimum length of the password. Yup passwords by default handle the conditions of at least one upper case, at least one lower case, and at least one special character in the password
-    password: yup.string().min(8).required(),
-    age: yup.string(),
-    mobile: yup.string(),
-  })
+ System.out.println("Eating...");
 
-  // Function which will validate the input data whenever submit button is clicked.
+ }
 
-  async function validateForm() {
-    // creating a form data object
-
-    let dataObject = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      age: age,
-      mobile: mobile,
-    }
-
-    // validating this dataObject concerning Yup userSchema
-
-    const isValid = await userSchema.isValid(dataObject)
-
-    if (isValid) {
-      alert('Form is Valid')
-    } else {
-      alert('Form is Invalid')
-    }
-  }
-
-  return (
-    <div className="main">
-      <form>
-        {/* Input Field to insert First Name */}
-        <input
-          placeholder="First Name"
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        {/* Input Field to insert Last Name */}
-        <input
-          placeholder="Last Name"
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        {/* Input Field to insert Mobile Number */}
-        <input
-          placeholder="Mobile Number"
-          onChange={(e) => setMobile(e.target.value)}
-        />
-        {/* Input Field to insert Age */}
-        <input placeholder="Age" onChange={(e) => setAge(e.target.value)} />
-        {/* Input Field to insert Email Address of the user */}
-        <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        {/* Input Field to insert Password */}
-        <input
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          type="submit"
-          onClick={() => {
-            validateForm()
-          }}
-        >
-          Submit
-        </button>
-      </form>
-    </div>
-  )
 }
 
-export default App
+// Child class inheriting from Animal
 
+class Dog extends Animal {
 
+ void bark() {
 
-Practical 9: Use the useFetch custom hook from react-fetch-hook
->npx create-react-app myapp
->cd myapp
->npm start
->npm install react-fetch-hook
+ System.out.println("Barking...");
 
-App.js
-import useFetch from "react-fetch-hook";
+ }
 
-const UseFetch = () => {
-  const { data: posts, isLoading, error } = useFetch('https://jsonplaceholder.typicode.com/posts');
+}
 
-  // Show a loading message while data is fetching
-  if (isLoading) {
-    return <h2>Loading...</h2>;
-  }
+// Main class
 
-  // Handle error
-  if (error) {
-    return <div className="error">Error: error fetching</div>;
-  }
+public class Main {
 
-  return (
-    <div>
-      <h1 className='title'>Post of users</h1>
-      {posts.map((post) => (
-        <div key={post.id} className="card">
-          <h2 className='users'>{post.title}</h2>
-          <p>{post.body}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
-export default UseFetch;
+ public static void main(String[] args) {
 
+ Dog dog = new Dog();
 
-Practical 7: Axios Library
->npx create-react-app myapp
->cd myapp
->npm start
->npm i axios
+ dog.eat(); // Inherited from Animal class
 
-App.js
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-const Axios = () => {
-  const [meals, setMeals] = useState([])
-  useEffect(() => {
-    axios.get('https://www.themealdb.com/api/json/v1/1/random.php')
-      .then((res) => {
-        setMeals(res.data.meals);
-      })
-  }, [])
+ dog.bark(); // Method of Dog class
 
-  return (
-    <div>
-      {meals.map((meal) => (
-      <img key={meal.idMeal} src={meal.strMealThumb} alt={meal.strMeal} width={400}/>
-      ))}
-    </div>
-  );
-};
-export default Axios;
+ }
 
+}
+Q.2 Write a Program to demonstrate Multiple Inheritance(through Interfaces)
 
+// Interface1
 
-Practical 6: Use the JavaScript Fetch() method
-Command:
->npx create-react-app myapp
->cd myapp
->npm start
-> npm i @tanstack/react-query
+interface Walks {
 
-Index.js
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.js' // File extention should not be App.jsx
-import './index.css'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+ void walk();
 
-const queryClient = new QueryClient();
+}
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  </React.StrictMode>
-)
+// Interface2
 
+interface Swims {
 
+ void swim();
 
+}
 
+// Class implementing both interfaces
 
-App.js
-import { useQuery } from '@tanstack/react-query';
-const Query = () => {
-  const { data: comments, isLoading, error } = useQuery({
-    queryFn: () =>
-      // Fetch data from an API
-      fetch('https://jsonplaceholder.typicode.com/comments?_limit=10').then(
-        (res) => res.json()
-      ),
-    queryKey: ['comments'],
-  });
+class Amphibian implements Walks, Swims {
 
-  if (isLoading) {
-    return <h2>Loading...</h2>;
-  }
+ public void walk() {
 
-  // to handle error
-  if (error) {
-    return <div className="error">Error: error fetching</div>
-  }
+ System.out.println("Walking...");
 
-  return (
-    <div>
-      <h1 className='title'>Email address of users</h1>
-      {comments.map((comment) => (
-        <h2 key={comment.id} className="users">
-          {comment.id}.  
-            {comment.email}
-        </h2>
-      ))}
-    </div>
-  );
-};
-export default Query;
+ }
 
+ public void swim() {
+
+ System.out.println("Swimming...");
+
+ }
+
+}
+
+// Main class
+
+public class Main {
+
+ public static void main(String[] args) {
+
+ Amphibian frog = new Amphibian();
+
+ frog.walk(); // Method from Walks interface
+frog.swim(); // Method from Swims interface
+
+ }
+
+}
+
+Q.3 Write a Program to demonstrate Multilevel Inheritance
+
+// Grandparent class
+
+class Animal {
+
+ void eat() {
+
+ System.out.println("Eating...");
+
+ }
+
+}
+
+// Parent class inheriting from Animal
+
+class Dog extends Animal {
+
+ void bark() {
+
+ System.out.println("Barking...");
+
+ }
+
+}
+
+// Child class inheriting from Dog
+
+class Labrador extends Dog {
+
+ void play() {
+
+ System.out.println("Playing fetch...");
+
+ }
+
+}
+// Main class
+
+public class Main {
+
+ public static void main(String[] args) {
+
+ Labrador labrador = new Labrador();
+
+ labrador.eat(); // Inherited from Animal class
+
+ labrador.bark(); // Inherited from Dog class
+
+ labrador.play(); // Method of Labrador class
+
+ }
+
+}
